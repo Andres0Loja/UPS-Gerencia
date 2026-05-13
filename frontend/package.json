@@ -1,0 +1,11 @@
+{
+  "name": "ups-gerencia-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "node -e \"console.log('Frontend estatico validado. No requiere build.')\"",
+    "preview": "node server.js"
+  }
+}

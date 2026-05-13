@@ -1,0 +1,46 @@
+{
+  "info": {
+    "name": "UPS Gerencia SOA",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Listar profesores",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/profesores"
+      }
+    },
+    {
+      "name": "Listar asignaturas",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/asignaturas"
+      }
+    },
+    {
+      "name": "Crear solicitud academica",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"professorId\": 1,\n  \"subjectId\": 1,\n  \"studentIds\": [1, 2],\n  \"topic\": \"galaxias y exploracion espacial\"\n}"
+        },
+        "url": "http://localhost:8080/api/academic-requests"
+      }
+    },
+    {
+      "name": "Historial",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8080/api/solicitudes"
+      }
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UPS Gerencia SOA</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main id="app" class="app-shell">
+      <section class="topbar">
+        <div>
+          <p class="eyebrow">Sistema distribuido web SOA</p>
+          <h1>Solicitudes de recursos academicos</h1>
+        </div>
+        <div class="status-pill" id="apiStatus">Conectando</div>
+      </section>
+
+      <section class="workspace">
+        <form id="requestForm" class="panel form-panel">
+          <div class="panel-header">
+            <h2>Nueva solicitud</h2>
+            <button type="button" id="refreshButton" class="secondary-button">Actualizar datos</button>
+          </div>
+
+          <label>
+            Profesor
+            <select id="professorSelect" required></select>
+          </label>
+
+          <label>
+            Asignatura
+            <select id="subjectSelect" required></select>
+          </label>
+
+          <label>
+            Tema academico
+            <input id="topicInput" type="text" minlength="3" required placeholder="Ej. galaxias y exploracion espacial" />
+          </label>
+
+          <fieldset>
+            <legend>Estudiantes destinatarios</legend>
+            <div id="studentsBox" class="students-box"></div>
+          </fieldset>
+
+          <button type="submit" id="submitButton" class="primary-button">Crear solicitud</button>
+          <p id="formMessage" class="form-message"></p>
+        </form>
+
+        <section class="panel result-panel">
+          <div class="panel-header">
+            <h2>Resultado del proceso</h2>
+            <span id="finalStatus" class="small-status">Sin ejecutar</span>
+          </div>
+          <div id="resultContent" class="empty-state">
+            Complete el formulario para generar el dossier academico.
+          </div>
+        </section>
+      </section>
+
+      <section class="panel history-panel">
+        <div class="panel-header">
+          <h2>Historial de solicitudes</h2>
+          <button type="button" id="historyButton" class="secondary-button">Recargar historial</button>
+        </div>
+        <div id="historyList" class="history-list"></div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,149 @@
+openapi: 3.0.3
+info:
+  title: UPS Gerencia SOA API
+  version: 1.0.0
+  description: API del sistema distribuido web para solicitudes de recursos academicos.
+servers:
+  - url: http://localhost:8080
+    description: api-gateway
+paths:
+  /api/academic-requests:
+    post:
+      summary: Ejecuta el proceso de negocio completo.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcademicRequest'
+            example:
+              professorId: 1
+              subjectId: 1
+              studentIds: [1, 2]
+              topic: galaxias y exploracion espacial
+      responses:
+        '200':
+          description: Solicitud academica generada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcademicProcessResponse'
+  /api/profesores:
+    get:
+      summary: Lista profesores disponibles.
+      responses:
+        '200':
+          description: Profesores.
+  /api/asignaturas:
+    get:
+      summary: Lista asignaturas con profesor y estudiantes.
+      responses:
+        '200':
+          description: Asignaturas.
+  /api/solicitudes:
+    get:
+      summary: Lista historial de solicitudes academicas.
+      responses:
+        '200':
+          description: Solicitudes.
+  /content/search:
+    get:
+      summary: Busca recursos en NASA y NYTimes.
+      servers:
+        - url: http://localhost:8082
+      parameters:
+        - name: topic
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recursos consolidados.
+  /notifications/send:
+    post:
+      summary: Simula notificacion a estudiantes.
+      servers:
+        - url: http://localhost:8083
+      responses:
+        '200':
+          description: Evidencia de notificacion.
+  /academic/validate-request:
+    post:
+      summary: Valida profesor, asignatura y estudiantes.
+      servers:
+        - url: http://localhost:8081
+      responses:
+        '200':
+          description: Validacion academica correcta.
+components:
+  schemas:
+    AcademicRequest:
+      type: object
+      required: [professorId, subjectId, studentIds, topic]
+      properties:
+        professorId:
+          type: integer
+          format: int64
+        subjectId:
+          type: integer
+          format: int64
+        studentIds:
+          type: array
+          items:
+            type: integer
+            format: int64
+        topic:
+          type: string
+    AcademicProcessResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        professor:
+          type: object
+        subject:
+          type: object
+        students:
+          type: array
+          items:
+            type: object
+        topic:
+          type: string
+        nasaResources:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceItem'
+        nytimesArticles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceItem'
+        notification:
+          type: object
+        providersUsed:
+          type: array
+          items:
+            type: string
+        finalStatus:
+          type: string
+        externalFallbackUsed:
+          type: boolean
+        warnings:
+          type: array
+          items:
+            type: string
+    ResourceItem:
+      type: object
+      properties:
+        provider:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        fallback:
+          type: boolean
+        message:
+          type: string

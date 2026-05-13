@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: ups-gerencia-postgres
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME:-ups_gerencia}
+      POSTGRES_USER: ${DATABASE_USER:-ups_user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-ups_password}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - ups-gerencia-postgres-data:/var/lib/postgresql/data
+    networks:
+      - ups-gerencia-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER:-ups_user} -d ${DATABASE_NAME:-ups_gerencia}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  ups-gerencia-net:
+    driver: bridge
+
+volumes:
+  ups-gerencia-postgres-data:
